@@ -1,0 +1,4 @@
+#[test_config]
+test_string = "test_string_value"
+test_u32 = 12345
+test_f32 = 123.45
