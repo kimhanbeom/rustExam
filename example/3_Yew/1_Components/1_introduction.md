@@ -12,7 +12,8 @@
 1). Create
  - Component 생성될 떄, 해당 메서드는 부모 componet로부터 설정들을 받고, 그 설정들은 create 메서드를 통해 전달되는 <span style="color:red"> **Context\<Self\>** </span>에 저장됩니다.
  - 그 설정들은 component의 상태 초기화에 사용됩니다.
- - "link"는 콜백의 등록이나 컴포넌트에게 메세지 전달을 위해 사용됩니다.
+ - "link"는 callback 등록이나 컴포넌트에게 메세지 전달을 위해 사용됩니다.
+
 
  ```rust
     use yew::{Component, Context, html, Html, Properties};
@@ -40,8 +41,10 @@
 
 2). View
  - view 메서드는 유저가 어떻게 component를 dom객체로 랜더링 해야 되는지 작성하는 곳입니다.
- (실제 화면단 구현을 이곳에 표시한다고 생각하면 됩니다.)
- - rust function을 사용하여 HTML 방식으로 코드로 작성하 는것은 꽤 난잡하기 떄문에 Yew은 <span style="color:red"> **html!** </span> 매크로를 제공합니다.
+
+ (실제 화면단 구현을 이곳에 표시한다고 생각하면 됩니다. component를 dom에 mount한다고 볼 수 있다.)
+
+ - rust function을 사용하여 HTML 방식으로 코드로 작성하는 것은 꽤 난잡하기 떄문에 Yew은 <span style="color:red"> **html!** </span> 매크로를 제공합니다.
  - 이 매크로는 React's jsx와 유사합니다.
  - 한가지 차이점이 있다면 yew은 properties를 위한 shorthad syntax를 제공합니다.
  ex) onclick={onclick} 대신 {onclick}으로 사용하면 됩니다.
@@ -81,7 +84,7 @@
 3). Rendered
 - Redered 메서드는 view 메서드가 호출 됬을때 한번만 호출됩니다.
 - yew은 브라우저가 페이지 새로고침을 하기전에 Dom에 결과들을 가지고 render 합니다.
-- component가 element의 rendering을 완료한 뒤 수행하고자하는 action들을 원할떄 매우 유용합니다.
+- component가 element로 render가 완료한 뒤 수행하고자 하는 actions(동작들)이 있을때 매우 유용합니다.
 - first_render 파라미터는 이 메서드가 첫번쨰 랜더나 다음랜더에 중 어떤때에 호출 될지 결정할떄 사용할 수 있습니다.
 
 
@@ -127,9 +130,9 @@ redered 라이프 사이클 메서드는 필수 구현이 아니며,아무것도
 * * *
 
 4). update
-- message를 통한 components간의 통신을 다루는 메서드
-- 메세지에 따라서 필요로 하면 스스로 re-redering 하여 컴포넌트가 업데이트 될 수 있도록 합니다.
-- messages은 이벤트 리스너,자식 components,Agent,Service나 futures에 보낼 수 있습니다.
+- component간의 통신은 message를 통해 발생하고,이는 update methde에서 handle 됩니다.
+- message 따라서 필요로 하면 스스로 re-redering 하여 컴포넌트가 업데이트 될 수 있도록 합니다.
+- messages은 event listeners,child components,Agent,Service나 futures에 보낼 수 있습니다.
 
 ```rust
     use yew::{Component, Context, html, Html};
@@ -219,19 +222,18 @@ redered 라이프 사이클 메서드는 필수 구현이 아니며,아무것도
   2). view 메서드 호출되서 yew이 브라우저 dom에 랜더링할 내용을
   알게됨.
 
-  3).context link을 사용하여 업데이트 메세지를 예약하여 rendered 메서드를 호출합니다.
+  3). context link을 사용하여 업데이트 메세지를 예약하여 rendered 메서드를 호출합니다.
 
   4). yew은 post-reder 차례를 끝냅니다.
 
   5). yew은 예약된 이벤트와 메세지큐가 비었는지 체크합니다.
 
-  6). component의 re-render필요하고 무언가의 변화됨을 나타내게 되면 true가 리턴되어
-      update 메서드가 호출됩니다.
+  6). 호출된 update 메서드는 무언가 변하고 component의 re-render 필요함을 알리기 위해 true를 리턴합니다.
 
   7).2번으로 점프합니다.
 
   * * *
-  업데이트 예약을 rendered 메서스에서 하는것은 유용하지만 , 이러한 loop를 어ㄴ떻게 끝낼것인지 명시해야합니다.
+  업데이트 예약을 rendered 메서스에서 하는것은 유용하지만 , 이러한 loop를 어떻게 끝낼것인지 명시해야합니다.
   * * *
 
 
