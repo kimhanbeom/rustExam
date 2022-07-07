@@ -32,6 +32,9 @@
    ```rust
     let array_of_ten = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     let three_to_five = array_of_ten[2..5];
+
+    // Slice 또한 dynamic type 이므로 slice 만든뒤 & 사용이 필요
+    println!(“{:?} , &array_of_ten[0..2]);
   ```
 
  3) Vectors
@@ -51,4 +54,10 @@
     //값을 넣주면서 생성 가능
     let mu my_vec2 = vec![8,9,10];
   }
+  ```
+
+  *** From , into ****
+  ```rust
+    String::From(“Dave”) //string 타입생성
+    let my_city :String = “Seoul”.into(). //&str을 String 타입에 넣어줌
   ```
