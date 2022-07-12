@@ -32,14 +32,14 @@
    v1_iter.next()
  ```
  - next,sum 과 같이 반복자를 쓸 경우 소비되어 빈껍데기만 남게되는 방식으로 호출하는 메서드를 소비하는 어댑터라 합니다.
-   ```rust
+ ```rust
     v1_iter.iter().sum()
-   ```
+ ```
  - 반복자에서 다른 반복자로 변경하고 생성하는 메서드를 반복자 어댑터라고 한다.
-  ```rust
+ ```rust
      let v1: Vec<i32> = vec![1,2,3];
      v1.iter().map(|x| x+1).collect();
-  ```
+ ```
 
  - Iterator에 chaining으로 사용하는 여러 함수
     1) next() : 다음 요소를 가져옴
